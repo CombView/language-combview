@@ -309,7 +309,8 @@
 
   'simpletypename' :
         'comment' : 'type declaration'
-        'match': '([A-Za-z_][A-Za-z0-9_]*)\\s*(?:($\\n|,))'
+        'comment': '([A-Za-z_][A-Za-z0-9_]*)\\s*(?=($\\n|,|))'
+        'match': '([A-Za-z_][A-Za-z0-9_]*)'
         'captures':
           '1':
             'name':'entity.name.type.combview'
@@ -385,14 +386,26 @@
             }
           ]
   'parameterpair2':
-    'match':'((?:(\\())[\\w\\s\\$]*)\\s*(\\:)\\s*([\\w\\s\\$]*(?:(,|\\))) )'
+    'comment':'((?:(\\())[\\w\\s\\$]*)\\s*(\\:)\\s*([\\w\\s\\$]*(?:(,|\\))) )'
+    'match':'(?:(\\b))\\s*([\\w]+)(\\s*:\\s*)([\\w][\\w\\s\\$]*)(,|)'
     'captures':
       '1':
         'name':'invalid.illegal'
       '2':
-        'name':'keyword.for.name'
+        'name':'entity.name.function.for.name'
       '3':
-        'comment':'invalid.illegal'
+        'name':'invalid.illegal'
+      '4':
+        'patterns':[
+          {
+            'include':'#compoundtypename'
+          }
+          {
+            'include':'#simpletypename'
+          }
+        ]
+      '5':
+        'name':'invalid.illegal.comma'
 
   'complextypename3' :
         'comment' : 'complex type declaration'
@@ -405,7 +418,7 @@
         'end':'(?=\\)\\{)'
         'patterns':[
               {
-                'include':'#functionxxx'
+                'include':'#function'
               }
               {
                 'include':'#parameterpair2'
