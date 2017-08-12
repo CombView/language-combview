@@ -76,16 +76,13 @@
           'name':'meta.name.type'
           'patterns': [
            {
-             'include': '#line_comment'
+             'include' : '#line_comment'
            }
            {
              'include' : '#compoundtypename'
            }
            {
              'include' : '#simpletypename'
-           }
-           {
-             'include':'#complextypename'
            }
         ]
       'comment':'end of type - thanks to http://www.apeth.com/nonblog/stories/textmatebundle.html'
@@ -94,7 +91,10 @@
     'include':'#complextypenameinheritance'
   }
   {
-    'include':'#complextypename'
+    'include':'#complextypename3'
+  }
+  {
+    'include':'#complextypename4'
   }
   {
     'include':'#function'
@@ -352,17 +352,111 @@
               }
             ]
       'comment' : 'end type'
-  'complextypename' :
+  'parameterlist' :
+     'applyEndPatternLast': 1
+     'begin':'\\(\\s*'
+     'end':'\\s*(\\))'
+     'endCaptures':
+       '1':
+         'name':'entity.name.type'
+     'contentName':'invalid.illegal'
+     'patterns':[
+       {
+         'include':'#parameterpair1'
+       }
+       {
+         'include':'#parameterpair2'
+       }
+     ]
+  'parameterpair1':
+          'applyEndPatternLast': 1
+          'begin':':'
+          'end':'(?=(,|\\)))'
+          'name':'meta.name.parameter'
+          'patterns':[
+            {
+              'include':'#simpletypename'
+            }
+            {
+              'include':'#compoundtypename'
+            }
+            {
+                'include':'#function'
+            }
+          ]
+  'parameterpair2':
+    'match':'((?:(\\())[\\w\\s\\$]*)\\s*(\\:)\\s*([\\w\\s\\$]*(?:(,|\\))) )'
+    'captures':
+      '1':
+        'name':'invalid.illegal'
+      '2':
+        'name':'keyword.for.name'
+      '3':
+        'comment':'invalid.illegal'
+
+  'complextypename3' :
         'comment' : 'complex type declaration'
-        'begin':'^\\s*([A-Za-z_][A-Za-z0-9_]*)(\\(.*\\))\\s*{'
+        'begin':'^\\s*([A-Za-z_][A-Za-z0-9_]*)(\\()'
         'beginCaptures':
           '1':
             'name':'entity.name.type.combview'
           '2':
-            'name':'invalid.illegal.parameter.list'
-        'end':'}'
-        'name':'meta.name.testcomplex'
-        'contentName':'invalid.illegal.opt'
+            'name':'invalid.illegal.punctuation.begin.test'
+        'end':'(?=\\)\\{)'
+        'patterns':[
+              {
+                'include':'#functionxxx'
+              }
+              {
+                'include':'#parameterpair2'
+              }
+        ]
+
+  'complextypename4' :
+        'begin':'(\\)\\{)'
+        'beginCaptures':
+          '1':
+            'name':'invalid.illegal.test'
+        'end':'(\\})'
+        'endCaptures':
+          '1':
+            'name':'invalid.illegal.test'
+        'name':'comment.multiline.meta.name.testcomplex'
+        'patterns':[
+          {
+            'include':'#optimizationbody'
+          }
+        ]
+      'comment' : 'end type'
+
+
+  'complextypename2' :
+        'applyEndPatternLast': '1'
+        'comment' : 'complex type declaration'
+        'begin':'^\\s*([A-Za-z_][A-Za-z0-9_]*)(\\(\\s*)([a-zA-Z0-9_\\s\\(\\)\\:,\\$-\\>]*)(\\s*\\)\\s*\\{)'
+        'beginCaptures':
+          '1':
+            'name':'entity.name.type.combview'
+          '2':
+            'name':'invalid.illegal.test'
+          '3':
+            'patterns':[
+              {
+                'include':'#functionxxx'
+              }
+              {
+                'include':'#parameterpair2'
+              }
+            ]
+          '4':
+            'name':'invalid.illegal.test'
+          '5':
+            'name':'invalid.illegal.test'
+        'end':'(\\})'
+        'endCaptures':
+          '1':
+            'name':'invalid.illegal.test'
+        'name':'comment.multiline.meta.name.testcomplex'
         'patterns':[
           {
             'include':'#optimizationbody'
@@ -376,16 +470,16 @@
           '1':
             'name':'entity.name.type.combview'
           '2':
-            'name':'invalid.illegal.parameter.list'
+            'name':'parameter.list'
           '3':
             'name':'keyword.is.test'
           '4':
             'name':'entity.name.type.combview'
           '5':
-            'name':'invalid.illegal.parameter.list'
+            'name':'parameter.list'
         'end':'}'
         'name':'meta.name.testcomplex'
-        'contentName':'invalid.illegal.opt'
+        'contentName':'comment.multiline.testing'
         'patterns':[
           {
             'include':'#optimizationbody'
@@ -394,7 +488,8 @@
       'comment' : 'end type'
   'optimizationbody' :
     'comment' : 'optimization body'
-    'match':''
+    'begin':'\\{'
+    'end':'\\}'
     'name':'invalid.illegal.testcomplex'
     'comment' : 'end type'
 'scopeName': 'source.combview'
