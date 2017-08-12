@@ -317,11 +317,11 @@
       'comment' : 'end type'
   'compoundtypename' :
         'comment' : 'type declaration'
-        'match': '([A-Za-z_][A-Za-z0-9_]*)\\s*(of)(.*)(?:($\\n|,))'
+        'match': '(of)\\s+([A-Za-z_\\$][A-Za-z0-9_]*)'
         'captures':
-          '1':
-            'name':'entity.name.type.combview'
           '2':
+            'name':'entity.name.type.combview'
+          '1':
             'name':'keyword.type.of.combview'
           '3':
             'name':'meta.maybe.new.type'
