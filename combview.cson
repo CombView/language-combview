@@ -111,7 +111,7 @@
   'replacement':
     'match': '(\\$[A-Za-z_][A-Za-z0-9_]*)'
     'name': 'entity.name.type.replacement'
-  'keyword_arguments':
+  'keyword_argumentssss':
     'begin': '\\b([a-zA-Z_][a-zA-Z_0-9(\\s*of)]*)\\s*(=)(?!=)'
     'beginCaptures':
       '1':
@@ -308,23 +308,19 @@
       'comment': 'end external function'
 
   'simpletypename' :
-        'comment' : 'type declaration'
-        'comment': '([A-Za-z_][A-Za-z0-9_]*)\\s*(?=($\\n|,|))'
         'match': '([A-Za-z_][A-Za-z0-9_]*)'
         'captures':
           '1':
             'name':'entity.name.type.combview'
-      'comment' : 'end type'
   'compoundtypename' :
         'comment' : 'type declaration'
         'match': '(of)\\s+([A-Za-z_\\$][A-Za-z0-9_]*)'
         'captures':
-          '2':
-            'name':'entity.name.type.combview'
           '1':
             'name':'keyword.type.of.combview'
-          '3':
-            'name':'meta.maybe.new.type'
+
+          '2':
+            'name':'entity.name.type.combview'
             'patterns':[
               {
                 'begin':'\\('
@@ -406,6 +402,11 @@
         ]
       '5':
         'name':'invalid.illegal.comma'
+    'patterns':[
+      {
+        'include':'#line_comment'
+      }
+    ]
 
   'complextypename3' :
         'comment' : 'complex type declaration'
@@ -455,7 +456,7 @@
           '3':
             'patterns':[
               {
-                'include':'#functionxxx'
+                'include':'#line_comment'
               }
               {
                 'include':'#parameterpair2'
