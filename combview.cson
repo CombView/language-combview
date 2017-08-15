@@ -35,7 +35,7 @@
   {
     'comment': 'keywords for conditional operators'
     'name': 'keyword.control.conditional.combview'
-    'match': '\\b(if|then|else)\\b'
+    'match': '\\b(if|then|else|minimize|maximize)\\b'
   }
   {
       'comment': 'labels'
@@ -43,7 +43,7 @@
       'beginCaptures':
         '1':
           'name':'entity.name.tag.replacement'
-      'end':'\\s'
+      'end':'(?:(\\s|\\[))'
       'contentName': 'entity.name.tag.replacement'
       'patterns': [
         {
@@ -225,13 +225,15 @@
             'name': 'keyword.function.name.combview'
           '2':
             'name': 'storage.type.type.combview'
-        'end': '(\\))\\s*(-\\>)\\s*([A-Za-z_][A-Za-z0-9_\\s]*)'
+        'end': '(\\))\\s*(-\\>)\\s*(dynamic\\s)?\\s*([A-Za-z_][A-Za-z0-9_\\s]*)'
         'endCaptures':
           '1':
             'name': 'punctuation.definition.parameters.end.combview'
           '2':
             'name': 'keyword.function.arrow.combview'
           '3':
+            'name': 'keyword.function.dynamic.combview'
+          '4':
             'name': 'entity.name.type.combview'
         'comment': 'meta.function.combview'
         'name': 'meta.function.combview'
