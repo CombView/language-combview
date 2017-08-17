@@ -1,0 +1,37 @@
+CombView is a mathematical modeling language based on GMPL.
+
+The idea is to allow the modeling of classic linear integer programming for
+combinatorial optimization problems (traveling salesman problem, vehicle
+routing problem, knapsack problem, generalized assignment problem, 
+timetabling problems, ...) also including novel powerful constructs that
+arise naturally in these problems (permutations, subsets, multisets,
+ partitions, ...). Decision problems, multi-objective problems and multi-
+level problems can also be defined in the language.
+
+Each of these is presented as a function that may return a ''dynamic'' type,
+meaning that the result can be either empty, a single object or many
+objects simulateneously.
+
+For instance, "function subset(s: set) -> dynamic set" can return many
+different sets that are subset of s. As opposed to dynamic functions,
+classic (static) functions are also possible, for example,
+"function square(int) -> int".
+
+Lamdba functions can be used as parameters and to define new functions.
+Functions and types can also be defined externally in the base language
+API, still being written in C++ (with future plans for Python).
+
+Labels can be used to identify problem constraints and to reference those
+constraints recursively in dynamic programming approaches.
+
+The current version is just a text highlight for Atom editor, that can
+help (a lot) the writting of optimization problems using the language.
+
+Future plans include an interpreter an more advanced constructs (and some
+syntactic sugar) to simplify even more the definition of optimization and
+decision problems.
+
+More examples will be added soon.
+
+Enjoy!
+Igor Machado Coelho and collaborators
