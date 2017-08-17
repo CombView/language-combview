@@ -366,10 +366,8 @@
   'parameterpair2':
     'match':'(?:(\\b))\\s*([\\w]+)(\\s*:\\s*)([\\w][\\w\\s\\$]*),?'
     'captures':
-      '1':
-        'name':'invalid.illegal'
       '2':
-        'name':'entity.name.function.combview'
+        'name':'variable.parameter.combview'
       '3':
         'name':'punctuation.parameter.separator.combview'
       '4':
@@ -435,14 +433,14 @@
         ]
 
   'functionapplication' :
-        'match':'\\b([A-Za-z_][A-Za-z0-9_]*)(\\()([\\w,\\(\\)\\s\\$\\.\\+\\-\\*\\[\\]\\{\\}]*?)(\\))(?:(\\s+|\\b))'
+        'match':'\\b([A-Za-z_][A-Za-z0-9_]*)(\\()([\\w,\\(\\)\\s\\$\\.\\+\\-\\*\\[\\]\\{\\}]*?)(\\))'
         'captures':
           '1':
-            'name':'string.quoted.single.combview'
-          '2':
-            'name':'invalid.illegal.punctuation.begin.parameters'
-          '3':
             'name':'entity.name.function.combview'
+          '2':
+            'name':'punctuation.begin.parameters'
+          '3':
+            'comment':'entity.name.function.combview'
             'patterns':[
                         {
                           'include':'#float'
@@ -455,7 +453,7 @@
                         }
                       ]
           '4':
-            'name':'invalid.illegal.punctuation.begin.parameters'
+            'name':'punctuation.end.parameters'
 
   'optimizationbody' :
     'comment' : 'optimization body'
