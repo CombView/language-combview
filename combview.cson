@@ -44,26 +44,6 @@
     'include':'#sum'
   }
   {
-      'comment': 'labels'
-      'begin':'(\\@[A-Za-z])'
-      'beginCaptures':
-        '1':
-          'name':'entity.name.tag.replacement'
-      'end':'(?:(\\s|\\[))'
-      'contentName': 'entity.name.tag.replacement'
-      'patterns': [
-        {
-          'include':'#replacement'
-        }
-        {
-          'include':'#line_comment'
-        }
-        {
-          'include': '#double_strings'
-        }
-      ]
-  }
-  {
       'comment': 'keywords for error testings'
       'name': 'invalid.illegal.combview'
       'match': '\\b(error)\\b'
@@ -94,13 +74,10 @@
       'comment':'end of type - thanks to http://www.apeth.com/nonblog/stories/textmatebundle.html'
   }
   {
-    'include':'#complextypenameinheritance'
-  }
-  {
     'include':'#complextypename3'
   }
   {
-    'include':'#complextypename4'
+    'include':'#complextypenameinheritance'
   }
   {
     'include':'#function'
@@ -390,7 +367,7 @@
             }
           ]
   'parameterpair2':
-    'match':'(?:(\\b))\\s*([\\w]+)(\\s*:\\s*)([\\w][\\w\\s\\$]*)(,|)'
+    'match':'(?:(\\b))\\s*([\\w]+)(\\s*:\\s*)([\\w][\\w\\s\\$]*),?'
     'captures':
       '1':
         'name':'invalid.illegal'
@@ -417,22 +394,27 @@
 
   'complextypename3' :
         'comment' : 'complex type declaration'
-        'begin':'^\\s*([A-Za-z_][A-Za-z0-9_]*)(\\()'
+        'begin':'^\\s*([A-Za-z_][\\w]*)\\((?=(.*\\)\\{))'
         'beginCaptures':
           '1':
             'name':'entity.name.type.combview'
-          '29':
-            'name':'invalid.illegal.punctuation.begin.parameters'
-        'end':'(?:(\\}))'
-        'endCaptures':
-          '1':
-            'name':'invalid.illegal.end.block.combview'
+        'end':'(?=(\\}))'
         'patterns':[
               {
-                  'begin':'(\\))(?=(\\{))'
+                  'begin':'\\s+(is)\\s+'
                   'beginCaptures':
-                    '10':
-                      'name':'invalid.illegal.test'
+                    '1':
+                      'name':'keyword.is.combview'
+                  'end':'(?=(\\)\\{))'
+                  'contentName':'invalid.illegal.name.combview'
+                  'patterns': [
+                    {
+                      'include':'#functionapplication'
+                    }
+                  ]
+              }
+              {
+                  'begin':'(?=(\\)\\{))'
                   'end':'(?=(\\}))'
                   'nametest':'comment.multiline.meta.name.testcomplex'
                   'patterns':[
@@ -450,7 +432,7 @@
         ]
 
   'functionapplication' :
-        'match':'\\b([A-Za-z_][A-Za-z0-9_]*)(\\()([\\w,\\(\\)\\s\\$\\.\\{\\}]*)(\\))\\s+'
+        'match':'\\b([A-Za-z_][A-Za-z0-9_]*)(\\()([\\w,\\(\\)\\s\\$\\.\\+\\-\\*\\[\\]\\{\\}]*)(\\))\\s+'
         'captures':
           '1':
             'name':'string.quoted.single.combview'
@@ -473,85 +455,70 @@
             'name':'invalid.illegal.punctuation.begin.parameters'
 
 
-
-  'complextypename444' :
-        'begin':'(\\)\\{)'
-        'beginCaptures':
-          '1':
-            'name':'invalid.illegal.test'
-        'end':'(\\})'
-        'endCaptures':
-          '1':
-            'name':'invalid.illegal.test'
-        'name':'comment.multiline.meta.name.testcomplex'
-        'patterns':[
-          {
-            'include':'#optimizationbody'
-          }
-        ]
-      'comment' : 'end type'
-
-
-  'complextypename2' :
-        'applyEndPatternLast': '1'
+  'complextypenameinheritanceXXX' :
         'comment' : 'complex type declaration'
-        'begin':'^\\s*([A-Za-z_][A-Za-z0-9_]*)(\\(\\s*)([a-zA-Z0-9_\\s\\(\\)\\:,\\$-\\>]*)(\\s*\\)\\s*\\{)'
+        'comment':'^\\s*([A-Za-z_][A-Za-z0-9_]*)(\\()(.*)(\\))\\s*(?:(is))\\s*(?:([A-Za-z_][A-Za-z0-9_]*\\(.*\\)))\\{'
+        'comment':'^\\s*([A-Za-z_][\\w]*)(\\(.*?)\\s+((is)\\s+([A-Za-z_][\\w]*)(\\(.*))?\\)\\{'
+        'match':'^\\s*([A-Za-z_][\\w]*)(\\(.*\\))\\s+(is)\\s+([A-Za-z_][\\w]*)(\\(.*\\))\\{'
         'beginCaptures':
           '1':
             'name':'entity.name.type.combview'
           '2':
-            'name':'invalid.illegal.test'
-          '3':
+            'comment':'parameter list'
             'patterns':[
               {
-                'include':'#line_comment'
+                'include':'#functionapplication'
+              }
+              {
+                'include':'#function'
               }
               {
                 'include':'#parameterpair2'
               }
             ]
-          '4':
-            'name':'invalid.illegal.test'
-          '5':
-            'name':'invalid.illegal.test'
-        'end':'(\\})'
-        'endCaptures':
-          '1':
-            'name':'invalid.illegal.test'
-        'name':'comment.multiline.meta.name.testcomplex'
-        'patterns':[
-          {
-            'include':'#optimizationbody'
-          }
-        ]
-      'comment' : 'end type'
-  'complextypenameinheritance' :
-        'comment' : 'complex type declaration'
-        'begin':'^\\s*([A-Za-z_][A-Za-z0-9_]*)(\\(.*\\))\\s*(is)\\s*([A-Za-z_][A-Za-z0-9_]*)\\s*(\\(.*\\))\\s*{'
-        'beginCaptures':
-          '1':
-            'name':'entity.name.type.combview'
-          '2':
-            'name':'parameter.list'
           '3':
-            'name':'keyword.is.test'
+            'name':'keyword.is.combview'
           '4':
             'name':'entity.name.type.combview'
           '5':
-            'name':'parameter.list'
-        'end':'}'
-        'name':'meta.name.testcomplex'
-        'contentName':'comment.multiline.testing'
+            'comment':'invalid.illegal.entity.name.type.combview'
+            'patterns':[
+              {
+                'include':'#functionapplication'
+              }
+            ]
+        'end':'(?:(\\}))'
         'patterns':[
-          {
-            'include':'#optimizationbody'
-          }
+              {
+                  'begin':'(\\))(?=(\\{))'
+                  'beginCaptures':
+                    '10':
+                      'name':'invalid.illegal.test'
+                  'end':'(?=(\\}))'
+                  'nametest':'comment.multiline.meta.name.testcomplex'
+                  'patterns':[
+                    {
+                      'include':'#optimizationbody'
+                    }
+                  ]
+              }
+              {
+                'include':'#function'
+              }
+              {
+                'include':'#parameterpair2'
+              }
         ]
-      'comment' : 'end type'
   'optimizationbody' :
     'comment' : 'optimization body'
-    'begin':'(\\{)'
+    'begin':'(?=(\\{))'
+    'beginCaptures':
+      '1':
+        'name':'invalid.illegal.block.begin.combview'
     'end':'(?=(\\}))'
+    'endCaptures':
+      '1':
+        'name':'invalid.illegal.block.end.combview'
     'ccontentName':'comment.multiline.combview'
     'comment' : 'end type'
     'patterns':[
@@ -572,6 +539,9 @@
       }
       {
         'include':'#functionapplication'
+      }
+      {
+        'include':'#label'
       }
     ]
   'forall':
@@ -604,7 +574,24 @@
   'int':
     "match": "\\b([1-9]+[0-9]*|0)"
     "name": "constant.numeric.integer.decimal.combview"
-
+  'label':
+      'begin':'(\\@[A-Za-z])'
+      'beginCaptures':
+        '1':
+          'name':'entity.name.tag.replacement'
+      'end':'(?:(\\s|\\[))'
+      'contentName': 'entity.name.tag.replacement'
+      'patterns': [
+        {
+          'include':'#replacement'
+        }
+        {
+          'include':'#line_comment'
+        }
+        {
+          'include': '#double_strings'
+        }
+      ]
 
 
 'scopeName': 'source.combview'
