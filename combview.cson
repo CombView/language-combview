@@ -5,6 +5,7 @@
   'combview'
 ]
 'name': 'CombView'
+'firstLineMatch': '^#![ \\t]*\\/.*\\bcombview[\\d\\.]*\\b'
 'patterns': [
   {
     'include': '#line_comment'
@@ -22,17 +23,9 @@
     'include': '#int'
   }
   {
-    'include':'#functionapplication'
-  }
-  {
     'comment': 'include file'
     'name': 'keyword.control.conditional.combview'
     'match': '^\\s*(include)\\b'
-  }
-  {
-    'comment': 'keywords for conditional operators'
-    'name': 'keyword.control.conditional.combview'
-    'match': '\\b(if|then|else|minimize|maximize)\\b'
   }
   {
     'include':'#forall'
@@ -75,6 +68,9 @@
   }
   {
     'include':'#complextypename3'
+  }
+  {
+    'include':'#functionapplication'
   }
   {
     'include':'#function'
@@ -433,15 +429,26 @@
         ]
 
   'functionapplication' :
-        'match':'\\b([A-Za-z_][A-Za-z0-9_]*)(\\()([\\w,\\(\\)\\s\\$\\.\\+\\-\\*\\[\\]\\{\\}]*?)(\\))'
-        'captures':
+        'applyEndPatternLast':'1'
+        'comment':'\\b([A-Za-z_][A-Za-z0-9_]*)(\\()([\\w,\\(\\)\\s\\$\\.\\+\\-\\*\\[\\]\\{\\}\'@]*?)(\\))'
+        'begin':'\\b([A-Za-z_][A-Za-z0-9_]*)(\\()'
+        'beginCaptures':
           '1':
             'name':'entity.name.function.combview'
           '2':
-            'name':'punctuation.begin.parameters'
-          '3':
-            'comment':'entity.name.function.combview'
-            'patterns':[
+            'name':'invalid.illegal.punctuation.begin.parameters'
+
+          'comment':'entity.name.function.combview'
+          'patterns':[
+                        {
+                          'include':'#double_strings'
+                        }
+                        {
+                          'include':'#functionapplication'
+                        }
+                        {
+                          'include':'#single_strings'
+                        }
                         {
                           'include':'#float'
                         }
@@ -452,8 +459,10 @@
                           'include':'#sum'
                         }
                       ]
-          '4':
-            'name':'punctuation.end.parameters'
+        'end':'(\\))'
+        'endCaptures':
+          '1':
+            'name':'invalid.illegal.punctuation.end.parameters'
 
   'optimizationbody' :
     'comment' : 'optimization body'
@@ -488,6 +497,12 @@
       }
       {
         'include':'#sum'
+      }
+      {
+        'include':'#maxmin'
+      }
+      {
+        'include':'#conditional'
       }
       {
         'include':'#functionapplication'
@@ -544,6 +559,11 @@
           'include': '#double_strings'
         }
       ]
-
+   'maxmin':
+     'name': 'keyword.control.maxmin.combview'
+     'match': '\\b(minimize|maximize)\\b'
+   'conditional':
+     'name': 'keyword.control.conditional.combview'
+     'match': '\\b(if|then|else)\\b'
 
 'scopeName': 'source.combview'
