@@ -372,9 +372,9 @@
       '1':
         'name':'invalid.illegal'
       '2':
-        'name':'entity.name.function.for.name'
+        'name':'entity.name.function.combview'
       '3':
-        'name':'invalid.illegal'
+        'name':'punctuation.parameter.separator.combview'
       '4':
         'patterns':[
           {
@@ -406,11 +406,17 @@
                     '1':
                       'name':'keyword.is.combview'
                   'end':'(?=(\\)\\{))'
-                  'contentName':'invalid.illegal.name.combview'
+                  'contentName':'string.multiline.combview'
                   'patterns': [
-                    {
-                      'include':'#functionapplication'
-                    }
+                        {
+                          'include':'#float'
+                        }
+                        {
+                          'include':'#int'
+                        }
+                        {
+                          'include':'#sum'
+                        }
                   ]
               }
               {
@@ -432,7 +438,7 @@
         ]
 
   'functionapplication' :
-        'match':'\\b([A-Za-z_][A-Za-z0-9_]*)(\\()([\\w,\\(\\)\\s\\$\\.\\+\\-\\*\\[\\]\\{\\}]*)(\\))\\s+'
+        'match':'\\b([A-Za-z_][A-Za-z0-9_]*)(\\()([\\w,\\(\\)\\s\\$\\.\\+\\-\\*\\[\\]\\{\\}]*?)(\\))(?:(\\s+|\\b))'
         'captures':
           '1':
             'name':'string.quoted.single.combview'
