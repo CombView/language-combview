@@ -1,0 +1,16 @@
+Many things to do!
+
+(1) Better organize the language tokens. Many things are done twice.
+(2) Improve the "is" capture, the second part is ignored for now.
+(3) Capture if then else
+(4) Avoid comparison (<, >, =, <=, >=) in minimize/maximize scopes.
+(5) Allow a single comparison in constraints.
+(6) Create operator "in" to avoid function in(...)
+(7) Remove keyword set from set initializer set{...}
+(8) ...
+
+
+Keep in mind: commas are intended to separate VALUES (in parameter lists,
+ sets, sequences) and semi-commas separate COMMANDS (inside constrained tuples,
+sum and forall).
+

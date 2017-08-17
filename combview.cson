@@ -201,7 +201,7 @@
             'name': 'keyword.function.name.combview'
           '2':
             'name': 'storage.type.type.combview'
-        'end': '(\\))\\s*(-\\>)\\s*(dynamic\\s)?\\s*([A-Za-z_][A-Za-z0-9_\\s]*)'
+        'end': '(\\))\\s*(-\\>)\\s*(dynamic)?\\s+([A-Za-z_\\$][\\w\\s\\$]*)'
         'endCaptures':
           '1':
             'name': 'punctuation.definition.parameters.end.combview'
@@ -229,7 +229,7 @@
             'beginCaptures':
               '1':
                 'name': 'punctuation.definition.parameters.begin.combview'
-            'contentName': 'invalid.illegal.test.combview'
+            'comment': 'invalid.illegal.test.combview'
             'end': '(?=\\)\\s*-\\>)'
             'patterns': [
               {
@@ -365,7 +365,7 @@
       '2':
         'name':'variable.parameter.combview'
       '3':
-        'name':'punctuation.parameter.separator.combview'
+        'name':'keyword.separator.combview'
       '4':
         'patterns':[
           {
@@ -430,39 +430,12 @@
 
   'functionapplication' :
         'applyEndPatternLast':'1'
-        'comment':'\\b([A-Za-z_][A-Za-z0-9_]*)(\\()([\\w,\\(\\)\\s\\$\\.\\+\\-\\*\\[\\]\\{\\}\'@]*?)(\\))'
-        'begin':'\\b([A-Za-z_][A-Za-z0-9_]*)(\\()'
-        'beginCaptures':
+        'match':'\\b([A-Za-z_][A-Za-z0-9_]*)(\\()'
+        'captures':
           '1':
             'name':'entity.name.function.combview'
           '2':
-            'name':'invalid.illegal.punctuation.begin.parameters'
-
-          'comment':'entity.name.function.combview'
-          'patterns':[
-                        {
-                          'include':'#double_strings'
-                        }
-                        {
-                          'include':'#functionapplication'
-                        }
-                        {
-                          'include':'#single_strings'
-                        }
-                        {
-                          'include':'#float'
-                        }
-                        {
-                          'include':'#int'
-                        }
-                        {
-                          'include':'#sum'
-                        }
-                      ]
-        'end':'(\\))'
-        'endCaptures':
-          '1':
-            'name':'invalid.illegal.punctuation.end.parameters'
+            'name':'punctuation.begin.parameters.combview'
 
   'optimizationbody' :
     'comment' : 'optimization body'
@@ -499,6 +472,9 @@
         'include':'#sum'
       }
       {
+        'include':'#set'
+      }
+      {
         'include':'#maxmin'
       }
       {
@@ -517,21 +493,60 @@
           '1':
             'name':'keyword.type.forall.combview'
         'end':'\\}'
-        'contentName':'invalid.illegal.combview'
-  'for':
-        'begin':'\\b(for)\\{'
-        'beginCaptures':
-          '1':
-            'name':'keyword.type.forall.combview'
-        'end':'\\}'
-        'contentName':'invalid.illegal.combview'
+        'comment':'invalid.illegal.combview'
+        'patterns':[
+          {
+              'include':'#functionapplication'
+          }
+          {
+              'include':'#set'
+          }
+          {
+              'include':'#float'
+          }
+          {
+              'include':'#int'
+          }
+        ]
   'sum':
         'begin':'\\b(sum)\\{'
         'beginCaptures':
           '1':
             'name':'keyword.type.forall.combview'
         'end':'\\}'
-        'contentName':'invalid.illegal.combview'
+        'comment':'invalid.illegal.combview'
+        'patterns':[
+          {
+              'include':'#functionapplication'
+          }
+          {
+              'include':'#set'
+          }
+          {
+              'include':'#float'
+          }
+          {
+              'include':'#int'
+          }
+        ]
+  'set':
+        'begin':'\\b(set)\\{'
+        'beginCaptures':
+          '1':
+            'name':'keyword.type.forall.combview'
+        'end':'\\}'
+        'comment':'invalid.illegal.combview'
+        'patterns':[
+          {
+            'match':'\\.\\.'
+            'captures':
+              '0':
+                'name':'keyword.setelems.combview'
+          }
+          {
+              'include':'#int'
+          }
+        ]
   'float':
     'match': "\\b(?i:(\\d+\\.\\d*(e[\\-\\+]?\\d+)?))(?=[^a-zA-Z_])"
     'name': 'constant.numeric.float.combview'
