@@ -31,6 +31,16 @@ Future plans include an interpreter an more advanced constructs (and some
 syntactic sugar) to simplify even more the definition of optimization and
 decision problems.
 
+For those wanting to collaborate with the project, the GMPL documentation
+can be handful, also Rubular website for regular expressions.
+Perhaps the creation of GMPL language for Atom would greatly help the
+development of CombView, as it could be written as an extension.
+Other Atom grammars can be found in:
+* https://github.com/atom/language-python
+* https://github.com/atom
+To install it, just include in Atom grammars folder:
+$ ~/.atom/packages/language-combview/grammars/combview.cson
+
 More examples will be added soon.
 
 Enjoy!
