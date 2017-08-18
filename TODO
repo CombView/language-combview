@@ -1,13 +1,15 @@
 Many things to do!
 
-(1) Better organize the language tokens. Many things are done twice.
+(1) Capture parameters in functions and capture lambdas
 (2) Improve the "is" capture, the second part is ignored for now.
 (3) Capture if then else
 (4) Avoid comparison (<, >, =, <=, >=) in minimize/maximize scopes.
 (5) Allow a single comparison in constraints.
 (6) Create operator "in" to avoid function in(...)
 (7) Remove keyword set from set initializer set{...}
-(8) ...
+(8) Capture minimize[ ... ] as keyword (even the [ ]) for lexicographic obj.
+(9) Better organize the language tokens. Many things are done twice.
+(10) ...
 
 
 Keep in mind: commas are intended to separate VALUES (in parameter lists,
