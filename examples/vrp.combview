@@ -1,0 +1,35 @@
+# basic example: VRP
+# Igor Machado Coelho (2017)
+
+# require external function for permutation
+function permutation(S: set of $x) -> dynamic sequence of $x
+# require external function for partition
+function partition(S: set of $x) -> dynamic set of set of $x
+# require external function for set mapping
+function mapset(S: set of $x, function m(x: $x) -> $y ) -> set of $y
+# require external function in
+function in(S: set of $x) -> dynamic $x
+# advice: keyword IN, example, "X in Y" is equivalent to "X := in(Y)", calling function in().
+
+# c is cost matrix
+# d is demands per customer
+# Q is vehicle capacity
+VRP(c: matrix of int, d: sequence of int, Q:int){
+  N := size(d);              # number of customers plus depot
+  n := N - 1;                # number of customers
+  C := set{1..n};            # set of customers
+  N = rows(c); N = cols(c);  # basic check
+
+  # minimize traveled distance
+  minimize @fo : sum{r in R} (sum{i in set{0..size(r)-2}} c[r[i],r[i+1]] + c[r[size(r)-1],0] + c[0, r[0]]);
+
+  # partition customers in non-empty blocks.
+  #P : set of set of int (implicit)
+  P := partition(C);
+  #require at least one element in each route
+  #forall{p in P} : card(p) > 0; # not necessary, partition already guarantees this, unless C is empty set.
+  #R : set of dynamic sequence of int (implicit)
+  R := mapset(P, permutation);
+  #requires capacity constraint Q to be respected
+  forall{p in P} : sum{k in p} d[k] <= Q;
+}

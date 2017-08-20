@@ -499,6 +499,12 @@
               'include':'#functionapplication'
           }
           {
+            'match':'\\b(in)\\b'
+            'captures':
+              '1':
+                'name':'keyword.in.combview'
+          }
+          {
               'include':'#set'
           }
           {
@@ -518,6 +524,12 @@
         'patterns':[
           {
               'include':'#functionapplication'
+          }
+          {
+            'match':'\\b(in)\\b'
+            'captures':
+              '1':
+                'name':'keyword.in.combview'
           }
           {
               'include':'#set'
@@ -542,6 +554,9 @@
             'captures':
               '0':
                 'name':'keyword.setelems.combview'
+          }
+          {
+              'include':'#functionapplication'
           }
           {
               'include':'#int'
