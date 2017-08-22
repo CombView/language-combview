@@ -1,0 +1,23 @@
+#basic types and functions (external API)
+type problem   # basis of all constrained tuples
+type solution
+type set of $x
+
+# require external function solve (heuristic solve)
+function solve(P: problem) -> dynamic solution
+function solve(P: problem, timelimit: real) -> dynamic solution
+# require external function esolve (exact solve). dynamic output is needed for multiple optima.
+function esolve(P: problem) -> dynamic solution
+function esolve(P: problem, timelimit: real) -> dynamic solution
+# require external function psolve (Pareto solve).
+function psolve(P: problem) -> dynamic set of solution
+function psolve(P: problem, timelimit: real) -> dynamic set of solution
+
+# external function to access values on solutions
+function value(S: solution, v: string) -> string
+function asInt(v: string) -> int
+function asReal(v: string) -> real
+
+# require external function in
+function in(S: set of $x) -> dynamic $x
+# advice: keyword IN, example, "X in Y" is equivalent to "X := in(Y)", calling function in().
