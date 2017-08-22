@@ -3,12 +3,23 @@ type problem   # basis of all constrained tuples
 type solution
 type set of $x
 
-# require external function solve (heuristic solve)
+# navigate on dynamic type (experimental feature)
+# example:
+# S := subset(set{1..2}); can return S={1}
+# S := next(S); can return S={2}
+function next(d: dynamic $d) -> dynamic $d
+# list all elements of a given dynamic type (experimental feature)
+# example: A := all(S); returns A = {{},{1},{2},{1,2}}
+function all(d: dynamic $d) -> set of $d
+
+# require external function solve (heuristic solve).
 function solve(P: problem) -> dynamic solution
 function solve(P: problem, timelimit: real) -> dynamic solution
-# require external function esolve (exact solve). dynamic output is needed for multiple optima.
-function esolve(P: problem) -> dynamic solution
-function esolve(P: problem, timelimit: real) -> dynamic solution
+# require external function esolve (exact solve).
+# Output is not dynamic because although many optimal solutions can exist,
+# this method is intended to be deterministic.
+function esolve(P: problem) -> solution
+function esolve(P: problem, timelimit: real) -> solution
 # require external function psolve (Pareto solve).
 function psolve(P: problem) -> dynamic set of solution
 function psolve(P: problem, timelimit: real) -> dynamic set of solution
